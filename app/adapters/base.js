@@ -7,6 +7,7 @@ import {inject as service} from '@ember/service';
 export default RESTAdapter.extend(DataAdapterMixin, AjaxServiceSupport, {
     host: window.location.origin,
     namespace: ghostPaths().apiRoot.slice(1),
+    authorizer: 'authorizer:application',
 
     session: service(),
 

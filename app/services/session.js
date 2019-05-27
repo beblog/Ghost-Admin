@@ -1,15 +1,25 @@
 import RSVP from 'rsvp';
 import SessionService from 'ember-simple-auth/services/session';
-import {computed} from '@ember/object';
-import {inject as service} from '@ember/service';
+import {
+    computed
+} from '@ember/object';
+import {
+    inject as service
+} from '@ember/service';
+import {readOnly} from '@ember/object/computed';
 
 export default SessionService.extend({
     feature: service(),
     dataStore: service('store'), // SessionService.store already exists
     tour: service(),
+    cognito: service(),
+    cognitoUser: readOnly('cognito.user'),
+    username: readOnly('cognitoUser.username'),
 
     user: computed(function () {
-        return this.dataStore.queryRecord('user', {id: 'me'});
+        return this.dataStore.queryRecord('user', {
+            id: 'me'
+        });
     }),
 
     authenticate() {

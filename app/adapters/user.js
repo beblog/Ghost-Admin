@@ -9,6 +9,10 @@ export default ApplicationAdapter.extend(SlugUrl, {
 
         let url = this.buildURL(type.modelName, 'me', null, 'findRecord');
 
-        return this.ajax(url, 'GET', {data: {include: 'roles'}});
+        return this.ajax(url, 'GET', {
+            data: {
+                include: 'roles'
+            }
+        });
     }
 });

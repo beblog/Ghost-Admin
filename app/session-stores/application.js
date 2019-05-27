@@ -15,7 +15,7 @@ export default EphemeralStore.extend({
         return this.session.user.then(() => {
             // provide the necessary data for internal-session to mark the
             // session as authenticated
-            let data = {authenticated: {authenticator: 'authenticator:cookie'}};
+            let data = {authenticated: {authenticator: 'authenticator:cognito'}};
             this.persist(data);
             return data;
         }).catch(() => {

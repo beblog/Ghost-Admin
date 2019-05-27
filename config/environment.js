@@ -35,7 +35,14 @@ module.exports = function (environment) {
 
         moment: {
             includeTimezone: 'all'
-        }
+        },
+
+        cognito: {
+            poolId: process.env.COGNITO_USER_POOL,
+            clientId: process.env.COGNITO_APP_ID,
+            autoRefreshSession: true,
+            authenticationFlowType: 'USER_SRP_AUTH'
+        },
     };
 
     if (environment === 'development') {

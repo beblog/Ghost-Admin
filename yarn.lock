@@ -1111,6 +1111,24 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+"amazon-cognito-identity-js@^1.31 || ~2.0.1":
+  version "2.0.30"
+  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-2.0.30.tgz#120d16ec15bf980e64d05911bb755662fc1a9af1"
+  integrity sha512-g5/JnpWbZx3dkmjR3ooeuTwsfLtZ6B+4F75AAcT/zLtPruRrANPEtqNf2hVLyHHNwwuLeqezCKasfB/MiojF1g==
+  dependencies:
+    buffer "4.9.1"
+    crypto-browserify "1.0.9"
+    js-cookie "^2.1.4"
+
+amazon-cognito-identity-js@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.0.12.tgz#fd0086e8902ec32c0d6709ac61c851efbe1d07dc"
+  integrity sha512-fhbuZgaQbjOUt00RY3jhsFK55/ZYlgdx5dey2VB4YT5AW01mDiZiqhPKgLC5qd0JFr3x+c5gNhzNQaQGhq1rxw==
+  dependencies:
+    buffer "4.9.1"
+    crypto-js "^3.1.9-1"
+    js-cookie "^2.1.4"
+
 amd-name-resolver@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/amd-name-resolver/-/amd-name-resolver-1.2.0.tgz#fc41b3848824b557313897d71f8d5a0184fbe679"
@@ -2860,7 +2878,7 @@ buffer-xor@^1.0.3:
   resolved "https://registry.yarnpkg.com/buffer-xor/-/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
   integrity sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=
 
-buffer@^4.3.0:
+buffer@4.9.1, buffer@^4.3.0:
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-4.9.1.tgz#6d1bb601b07a4efced97094132093027c95bc298"
   integrity sha1-bRu2AbB6TvztlwlBMgkwJ8lbwpg=
@@ -3662,6 +3680,11 @@ cross-spawn@^6.0.0, cross-spawn@^6.0.5:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
+crypto-browserify@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/crypto-browserify/-/crypto-browserify-1.0.9.tgz#cc5449685dfb85eb11c9828acc7cb87ab5bbfcc0"
+  integrity sha1-zFRJaF37hesRyYKKzHy4erW7/MA=
+
 crypto-browserify@^3.11.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/crypto-browserify/-/crypto-browserify-3.12.0.tgz#396cf9f3137f03e4b8e532c58f698254e00f80ec"
@@ -3678,6 +3701,11 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^3.1.9-1:
+  version "3.1.9-1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+  integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
 
 crypto-random-string@^1.0.0:
   version "1.0.0"
@@ -4303,7 +4331,7 @@ ember-cli-babel@7.7.3, ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli
     ensure-posix-path "^1.0.2"
     semver "^5.5.0"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.12.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.18.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.12.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.18.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -4747,6 +4775,15 @@ ember-cli@3.10.1:
     walk-sync "^1.1.3"
     watch-detector "^0.1.0"
     yam "^1.0.0"
+
+ember-cognito@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/ember-cognito/-/ember-cognito-0.9.2.tgz#8b1fd45acf0a15998c913ba9de4ace00b2f187b0"
+  integrity sha512-aECpVpW8vufC4UwtrjxY8T75dacUIqXIcaMOcKKjEjJ3mU6BkmHJctmalLBtFD48cnUgWnFAvlqR+WUrmS24QA==
+  dependencies:
+    amazon-cognito-identity-js "^1.31 || ~2.0.1"
+    ember-cli-babel "^6.8.0"
+    ember-cli-node-assets "^0.2.2"
 
 ember-compatibility-helpers@^1.0.0, ember-compatibility-helpers@^1.1.1, ember-compatibility-helpers@^1.2.0:
   version "1.2.0"
@@ -6372,7 +6409,6 @@ gonzales-pe@4.2.4:
 
 "google-caja-bower@https://github.com/acburdine/google-caja-bower#ghost":
   version "6011.0.0"
-  uid "275cb75249f038492094a499756a73719ae071fd"
   resolved "https://github.com/acburdine/google-caja-bower#275cb75249f038492094a499756a73719ae071fd"
 
 got@^8.0.1:
@@ -7316,6 +7352,11 @@ jquery@^3.3.1:
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
   integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
 
+js-cookie@^2.1.4:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
+  integrity sha1-Gywnmm7s44ChIWi5JIUmWzWx7/s=
+
 js-levenshtein@^1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
@@ -7469,7 +7510,6 @@ just-extend@^4.0.2:
 
 "keymaster@https://github.com/madrobby/keymaster.git":
   version "1.6.3"
-  uid f8f43ddafad663b505dc0908e72853bcf8daea49
   resolved "https://github.com/madrobby/keymaster.git#f8f43ddafad663b505dc0908e72853bcf8daea49"
 
 keyv@3.0.0:
@@ -10624,7 +10664,6 @@ simple-swizzle@^0.2.2:
 
 "simplemde@https://github.com/kevinansfield/simplemde-markdown-editor.git#ghost":
   version "1.11.2"
-  uid "7afb50dcdd63d3a1f6ccad682b70acbd7bc52eb9"
   resolved "https://github.com/kevinansfield/simplemde-markdown-editor.git#7afb50dcdd63d3a1f6ccad682b70acbd7bc52eb9"
 
 sinon@^7.1.1:

@@ -1,12 +1,24 @@
 import $ from 'jquery';
-import Controller, {inject as controller} from '@ember/controller';
+import Controller, {
+    inject as controller
+} from '@ember/controller';
 import RSVP from 'rsvp';
 import ValidationEngine from 'ghost-admin/mixins/validation-engine';
-import {alias} from '@ember/object/computed';
-import {isArray as isEmberArray} from '@ember/array';
-import {isVersionMismatchError} from 'ghost-admin/services/ajax';
-import {inject as service} from '@ember/service';
-import {task} from 'ember-concurrency';
+import {
+    alias
+} from '@ember/object/computed';
+import {
+    isArray as isEmberArray
+} from '@ember/array';
+import {
+    isVersionMismatchError
+} from 'ghost-admin/services/ajax';
+import {
+    inject as service
+} from '@ember/service';
+import {
+    task
+} from 'ember-concurrency';
 
 export default Controller.extend(ValidationEngine, {
     application: controller(),
@@ -39,51 +51,48 @@ export default Controller.extend(ValidationEngine, {
     },
 
     authenticate: task(function* (authStrategy, authentication) {
-        try {
-            let authResult = yield this.session
-                .authenticate(authStrategy, ...authentication);
+        let credentials = {
+            username: authentication[0],
+            password: authentication[1]
+        };
+
+        this.session.authenticate(authStrategy, credentials).then((cognitoUserSession) => {
+            // Successfully authenticated!
             let promises = [];
 
             promises.pushObject(this.settings.fetch());
             promises.pushObject(this.config.fetchAuthenticated());
 
             // fetch settings and private config for synchronous access
-            yield RSVP.all(promises);
+            RSVP.all(promises);
 
-            return authResult;
-        } catch (error) {
+            return cognitoUserSession;
+        }).catch((error) => {
             if (isVersionMismatchError(error)) {
                 return this.notifications.showAPIError(error);
             }
 
-            if (error && error.payload && error.payload.errors) {
-                let [mainError] = error.payload.errors;
-
-                mainError.message = (mainError.message || '').htmlSafe();
-                mainError.context = (mainError.context || '').htmlSafe();
-
-                this.set('flowErrors', (mainError.context.string || mainError.message.string));
-
-                if (mainError.context.string.match(/user with that email/i)) {
-                    this.get('signin.errors').add('identification', '');
-                }
-
-                if (mainError.context.string.match(/password is incorrect/i)) {
-                    this.get('signin.errors').add('password', '');
-                }
+            //TODO: Handle Force Password Change
+            if (error.code === 'UserNotFoundException') {
+                this.get('signin.errors').add('identification', '');
+            } else if (error.code === 'NotAuthorizedException') {
+                this.get('signin.errors').add('password', '');
             } else {
                 // Connection errors don't return proper status message, only req.body
                 this.notifications.showAlert(
-                    'There was a problem on the server.',
-                    {type: 'error', key: 'session.authenticate.failed'}
+                    'There was a problem on the server.', {
+                        type: 'error',
+                        key: 'session.authenticate.failed'
+                    }
                 );
             }
-        }
+        });
     }).drop(),
 
     validateAndAuthenticate: task(function* () {
         let signin = this.signin;
-        let authStrategy = 'authenticator:cookie';
+        //let authStrategy = 'authenticator:cookie';
+        let authStrategy = 'authenticator:cognito';
 
         this.set('flowErrors', '');
         // Manually trigger events for input fields, ensuring legacy compatibility with
@@ -94,7 +103,9 @@ export default Controller.extend(ValidationEngine, {
         this.hasValidated.addObjects(this.authProperties);
 
         try {
-            yield this.validate({property: 'signin'});
+            yield this.validate({
+                property: 'signin'
+            });
             return yield this.authenticate
                 .perform(authStrategy, [signin.get('identification'), signin.get('password')]);
         } catch (error) {
@@ -112,11 +123,21 @@ export default Controller.extend(ValidationEngine, {
         this.hasValidated.addObject('identification');
 
         try {
-            yield this.validate({property: 'forgotPassword'});
-            yield this.ajax.post(forgottenUrl, {data: {passwordreset: [{email}]}});
+            yield this.validate({
+                property: 'forgotPassword'
+            });
+            yield this.ajax.post(forgottenUrl, {
+                data: {
+                    passwordreset: [{
+                        email
+                    }]
+                }
+            });
             notifications.showAlert(
-                'Please check your email for instructions.',
-                {type: 'info', key: 'forgot-password.send.success'}
+                'Please check your email for instructions.', {
+                    type: 'info',
+                    key: 'forgot-password.send.success'
+                }
             );
             return true;
         } catch (error) {
@@ -130,7 +151,9 @@ export default Controller.extend(ValidationEngine, {
             }
 
             if (error && error.payload && error.payload.errors && isEmberArray(error.payload.errors)) {
-                let [{message}] = error.payload.errors;
+                let [{
+                    message
+                }] = error.payload.errors;
 
                 this.set('flowErrors', message);
 
@@ -138,7 +161,10 @@ export default Controller.extend(ValidationEngine, {
                     this.get('signin.errors').add('identification', '');
                 }
             } else {
-                notifications.showAPIError(error, {defaultErrorText: 'There was a problem with the reset, please try again.', key: 'forgot-password.send'});
+                notifications.showAPIError(error, {
+                    defaultErrorText: 'There was a problem with the reset, please try again.',
+                    key: 'forgot-password.send'
+                });
             }
         }
     })

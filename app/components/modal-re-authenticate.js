@@ -28,7 +28,8 @@ export default ModalComponent.extend(ValidationEngine, {
 
     _authenticate() {
         let session = this.session;
-        let authStrategy = 'authenticator:cookie';
+        //let authStrategy = 'authenticator:cookie';
+        let authStrategy = 'authenticator:cognito';
         let identification = this.identification;
         let password = this.password;
 
@@ -36,10 +37,22 @@ export default ModalComponent.extend(ValidationEngine, {
 
         this.toggleProperty('submitting');
 
-        return session.authenticate(authStrategy, identification, password).finally(() => {
-            this.toggleProperty('submitting');
-            session.set('skipAuthSuccessHandler', undefined);
-        });
+        if (authStrategy === 'authenticator:cognito') {
+            let credentials = {
+                username: identification,
+                password: password
+            };
+
+            return session.authenticate(authStrategy, credentials).finally(() => {
+                this.toggleProperty('submitting');
+                session.set('skipAuthSuccessHandler', undefined);
+            });
+        } else {
+            return session.authenticate(authStrategy, identification, password).finally(() => {
+                this.toggleProperty('submitting');
+                session.set('skipAuthSuccessHandler', undefined);
+            });
+        }
     },
 
     _passwordConfirm() {
